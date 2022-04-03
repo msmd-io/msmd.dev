@@ -14,15 +14,31 @@ Here's how to set up ESP32 devices as a wireless access point, Art-Net server an
 
 These are the devices we'll be coding:
 
-* [ESP32 Access Point](#esp32-access-point) - creates the Art-Net wireless newtork.
-* [ESP32 Art-Net Node](#esp32-art-net-node) - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels.
-* [ESP32 Art-Net Server](#esp32-art-net-server) - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes.
+* [ESP32 Access Point](#esp32-access-point) [[Github]](https://github.com/msmd-io/esp32ArtNetAP) - creates the Art-Net wireless network.
+* [ESP32 Art-Net Node](#esp32-art-net-node) [[Github]](https://github.com/msmd-io/esp32ArtNetNode) - connects to the ESP32 Access Point and receives DMX data, which it sends to connected neopixels.
+* [ESP32 Art-Net Server](#esp32-art-net-server) [[Github]](https://github.com/msmd-io/esp32ArtNetServer) - connects to the ESP32 Access Point and sends DMX data to the ESP32 Nodes.
+
+
+Libraries
+---------
+I have forked these libraries for my own convenience but you can get them from the up-to-date source by following the links on github.
+
+For the Art-Net Node and Server you will need this Arduino library:
+
+[ArtnetWifi](https://github.com/msmd-io/ArtnetWifi)
+
+For the neopixels you will need this Arduino library:
+
+[FastLED](https://github.com/msmd-io/FastLED)
+
 
 ESP32 Access Point
 ------------------
 
 This is the easiest part.  ESP32 has an access point mode called SoftAP (SoftAP) which basically makes it create a wireless network, automatically assign IP addresses and direct
 newtork traffic between connected devices as necessary.
+
+When the access point is created it also runs a webserver. You can connect to Art-Net wifi from your phone and go to `http://2.0.0.1/` (assuming you don't change the IP address in the access point code) and it will present you with the IP addresses of the connected devices.
 
 ```
 // esp32ArtNetAP.ino
