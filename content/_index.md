@@ -1,21 +1,16 @@
-# A match made in heaven
+Welcome to Monkey See Monkey Do.
 
-There is a website obesity crisis. Bloated websites full of scripts, ads, and trackers are slowing your readers down every time they try to read your well-crafted content.
+Here you'll find a bunch of tutorials for Virtual Reality, Game Development, Microcontrollers, Lighting, Music and Audio.
 
-Hugo Bear Blog is all you need to build a fantastic and optimized site or blog. It works perfectly on **any** viewing device. All you need to focus on is writing good content.
+Check out the [Blog](/blog/) page or tutorials for the following devices here:
 
-[Go to the original bear blog](https://bearblog.dev/).
+[Teensy](/blog/teensy/)
 
----
-
-What happens when you combine the worlds' fastest, most lightweight static site generator with a design theme built to provide you with free, no-nonsense, super-fast blogging capabilities?
-
-**Use this theme, and find out!**
-
-Made with 💟 by [Jan Raasch](https://www.janraasch.com).
+[ESP32](/blog/esp32/)
 
 ---
 
-Simply publish content online, grow an audience, and keep your pages tiny, fast, and **optimized for search engines**.
+Made with 💟 by Leigh Murray.
 
-Each page is ~5kb, and you can **host your blog yourself**.
+---
+
