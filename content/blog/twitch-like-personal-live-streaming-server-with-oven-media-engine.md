@@ -10,4 +10,8 @@ date = "2022-04-03T20:15:42+02:00"
 tags = ["twitch","live-streaming","oven media engine"]
 +++
 
-This is a page about »Twitch-Like Personal Live Streaming ServerWith Oven Media Engine«.
+I wanted to make a live-streaming server so my friends can watch each other play without having to stream to the public on something like Twitch.
+
+So here's how I did it.
+
+I installed Oven Media Engine which kinda does all the hard work for you.
