@@ -1,4 +1,294 @@
-<!doctype html><html lang=en-au><head><meta http-equiv=x-clacks-overhead content="GNU Terry Pratchett"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=https://msmd.io/images/favicon.png><title>Wireless Neopixels With Esp32 and Artnet | Monkey See Monkey Do</title><meta name=title content="Wireless Neopixels With Esp32 and Artnet"><meta name=description content="This is a page about »Wireless Neopixels With Esp32 and Artnet«."><meta name=keywords content="esp32,artnet,neopixels,"><meta property="og:title" content="Wireless Neopixels With Esp32 and Artnet"><meta property="og:description" content="This is a page about »Wireless Neopixels With Esp32 and Artnet«."><meta property="og:type" content="article"><meta property="og:url" content="https://msmd.io/wireless-neopixels-with-esp32-and-artnet/"><meta property="og:image" content="https://msmd.io/images/share.png"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-04-03T20:09:44+02:00"><meta property="article:modified_time" content="2022-04-03T20:09:44+02:00"><meta property="og:site_name" content="Monkey See Monkey Do"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://msmd.io/images/share.png"><meta name=twitter:title content="Wireless Neopixels With Esp32 and Artnet"><meta name=twitter:description content="This is a page about »Wireless Neopixels With Esp32 and Artnet«."><meta itemprop=name content="Wireless Neopixels With Esp32 and Artnet"><meta itemprop=description content="This is a page about »Wireless Neopixels With Esp32 and Artnet«."><meta itemprop=datePublished content="2022-04-03T20:09:44+02:00"><meta itemprop=dateModified content="2022-04-03T20:09:44+02:00"><meta itemprop=wordCount content="11"><meta itemprop=image content="https://msmd.io/images/share.png"><meta itemprop=keywords content="esp32,artnet,neopixels,"><meta name=referrer content="no-referrer-when-downgrade"><style>body{font-family:Verdana,sans-serif;margin:auto;padding:20px;max-width:720px;text-align:left;background-color:#fff;word-wrap:break-word;overflow-wrap:break-word;line-height:1.5;color:#444}h1,h2,h3,h4,h5,h6,strong,b{color:#222}a{color:#3273dc}.title{text-decoration:none;border:0}.title span{font-weight:400}nav a{margin-right:10px}textarea{width:100%;font-size:16px}input{font-size:16px}content{line-height:1.6}table{width:100%}img{max-width:100%}code{padding:2px 5px;background-color:#f2f2f2}pre code{color:#222;display:block;padding:20px;white-space:pre-wrap;font-size:14px}div.highlight pre{background-color:initial;color:initial}div.highlight code{background-color:unset;color:unset}blockquote{border-left:1px solid #999;color:#222;padding-left:20px;font-style:italic}footer{padding:25px;text-align:center}.helptext{color:#777;font-size:small}.errorlist{color:#eba613;font-size:small}ul.blog-posts{list-style-type:none;padding:unset}ul.blog-posts li{display:flex}ul.blog-posts li span{flex:0 0 130px}ul.blog-posts li a:visited{color:#8b6fcb}@media(prefers-color-scheme:dark){body{background-color:#333;color:#ddd}h1,h2,h3,h4,h5,h6,strong,b{color:#eee}a{color:#8cc2dd}code{background-color:#777}pre code{color:#ddd}blockquote{color:#ccc}textarea,input{background-color:#252525;color:#ddd}.helptext{color:#aaa}}</style></head><body><header><a href=/ class=title><h2>Monkey See Monkey Do</h2></a><nav><a href=/>Home</a>
-<a href=/blog>Blog</a></nav></header><main><h1>Wireless Neopixels With Esp32 and Artnet</h1><p><i><time datetime=2022-04-03 pubdate>03 Apr, 2022</time></i></p><content><p>This is a page about »Wireless Neopixels With Esp32 and Artnet«.</p></content><p><a href=https://msmd.io/blog/esp32/>#esp32</a>
-<a href=https://msmd.io/blog/artnet/>#artnet</a>
+<!doctype html><html lang=en-au><head><meta http-equiv=x-clacks-overhead content="GNU Terry Pratchett"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=https://msmd.io/images/favicon.png><title>Wireless Neopixels With Esp32 and Artnet | Monkey See Monkey Do</title><meta name=title content="Wireless Neopixels With Esp32 and Artnet"><meta name=description content="Here&rsquo;s how to set up ESP32 devices as a wireless access point, Art-Net server and Art-Net Nodes, to control neo-pixels wirelessly with DMX.
+These are the devices we&rsquo;ll be coding:
+ ESP32 Access Point - creates the Art-Net wireless newtork. ESP32 Art-Net Node - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels. ESP32 Art-Net Server - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes."><meta name=keywords content="esp32,art-net,neopixels,"><meta property="og:title" content="Wireless Neopixels With Esp32 and Artnet"><meta property="og:description" content="Here&rsquo;s how to set up ESP32 devices as a wireless access point, Art-Net server and Art-Net Nodes, to control neo-pixels wirelessly with DMX.
+These are the devices we&rsquo;ll be coding:
+ ESP32 Access Point - creates the Art-Net wireless newtork. ESP32 Art-Net Node - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels. ESP32 Art-Net Server - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes."><meta property="og:type" content="article"><meta property="og:url" content="https://msmd.io/wireless-neopixels-with-esp32-and-artnet/"><meta property="og:image" content="https://msmd.io/images/share.png"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-04-03T20:09:44+02:00"><meta property="article:modified_time" content="2022-04-03T20:09:44+02:00"><meta property="og:site_name" content="Monkey See Monkey Do"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://msmd.io/images/share.png"><meta name=twitter:title content="Wireless Neopixels With Esp32 and Artnet"><meta name=twitter:description content="Here&rsquo;s how to set up ESP32 devices as a wireless access point, Art-Net server and Art-Net Nodes, to control neo-pixels wirelessly with DMX.
+These are the devices we&rsquo;ll be coding:
+ ESP32 Access Point - creates the Art-Net wireless newtork. ESP32 Art-Net Node - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels. ESP32 Art-Net Server - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes."><meta itemprop=name content="Wireless Neopixels With Esp32 and Artnet"><meta itemprop=description content="Here&rsquo;s how to set up ESP32 devices as a wireless access point, Art-Net server and Art-Net Nodes, to control neo-pixels wirelessly with DMX.
+These are the devices we&rsquo;ll be coding:
+ ESP32 Access Point - creates the Art-Net wireless newtork. ESP32 Art-Net Node - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels. ESP32 Art-Net Server - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes."><meta itemprop=datePublished content="2022-04-03T20:09:44+02:00"><meta itemprop=dateModified content="2022-04-03T20:09:44+02:00"><meta itemprop=wordCount content="989"><meta itemprop=image content="https://msmd.io/images/share.png"><meta itemprop=keywords content="esp32,art-net,neopixels,"><meta name=referrer content="no-referrer-when-downgrade"><style>body{font-family:Verdana,sans-serif;margin:auto;padding:20px;max-width:720px;text-align:left;background-color:#fff;word-wrap:break-word;overflow-wrap:break-word;line-height:1.5;color:#444}h1,h2,h3,h4,h5,h6,strong,b{color:#222}a{color:#3273dc}.title{text-decoration:none;border:0}.title span{font-weight:400}nav a{margin-right:10px}textarea{width:100%;font-size:16px}input{font-size:16px}content{line-height:1.6}table{width:100%}img{max-width:100%}code{padding:2px 5px;background-color:#f2f2f2}pre code{color:#222;display:block;padding:20px;white-space:pre-wrap;font-size:14px}div.highlight pre{background-color:initial;color:initial}div.highlight code{background-color:unset;color:unset}blockquote{border-left:1px solid #999;color:#222;padding-left:20px;font-style:italic}footer{padding:25px;text-align:center}.helptext{color:#777;font-size:small}.errorlist{color:#eba613;font-size:small}ul.blog-posts{list-style-type:none;padding:unset}ul.blog-posts li{display:flex}ul.blog-posts li span{flex:0 0 130px}ul.blog-posts li a:visited{color:#8b6fcb}@media(prefers-color-scheme:dark){body{background-color:#333;color:#ddd}h1,h2,h3,h4,h5,h6,strong,b{color:#eee}a{color:#8cc2dd}code{background-color:#777}pre code{color:#ddd}blockquote{color:#ccc}textarea,input{background-color:#252525;color:#ddd}.helptext{color:#aaa}}</style></head><body><header><a href=/ class=title><h2>Monkey See Monkey Do</h2></a><nav><a href=/>Home</a>
+<a href=/blog>Blog</a></nav></header><main><h1>Wireless Neopixels With Esp32 and Artnet</h1><p><i><time datetime=2022-04-03 pubdate>03 Apr, 2022</time></i></p><content><p>Here&rsquo;s how to set up ESP32 devices as a wireless access point, Art-Net server and Art-Net Nodes, to control neo-pixels wirelessly with DMX.</p><p>These are the devices we&rsquo;ll be coding:</p><ul><li><a href=#esp32-access-point>ESP32 Access Point</a> - creates the Art-Net wireless newtork.</li><li><a href=#esp32-art-net-node>ESP32 Art-Net Node</a> - connects to the ESP32 Access Point and receves DMX data, which it sents to connected neopixels.</li><li><a href=#esp32-art-net-server>ESP32 Art-Net Server</a> - connects to the ESP32 Access Point and sending DMX data to the ESP32 Nodes.</li></ul><h2 id=esp32-access-point>ESP32 Access Point</h2><p>This is the easiest part. ESP32 has an access point mode called SoftAP (SoftAP) which basically makes it create a wireless network, automatically assign IP addresses and direct
+newtork traffic between connected devices as necessary.</p><pre tabindex=0><code>// esp32ArtNetAP.ino
+
+#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &#34;esp_wifi.h&#34;
+
+const char *ssid = &#34;Art-Net&#34;;
+const char *passphrase = &#34;esp32artnetAP&#34;;
+
+IPAddress local_IP(2,0,0,1);
+IPAddress gateway(2,0,0,1);
+IPAddress subnet(255,0,0,0);
+
+WebServer server(80);
+
+void handleRoot() {
+  wifi_sta_list_t wifi_sta_list;
+  tcpip_adapter_sta_list_t adapter_sta_list;
+  memset(&amp;wifi_sta_list, 0, sizeof(wifi_sta_list));
+  memset(&amp;adapter_sta_list, 0, sizeof(adapter_sta_list));
+
+  esp_wifi_ap_get_sta_list(&amp;wifi_sta_list);
+  tcpip_adapter_get_sta_list(&amp;wifi_sta_list, &amp;adapter_sta_list);
+
+  char html[512] = &#34;Hello from ESP32&#34;;
+
+  for (int i=0; i &lt; adapter_sta_list.num; i++) {
+    tcpip_adapter_sta_info_t station = adapter_sta_list.sta[i];
+    char ipBuffer[16];
+    sprintf(ipBuffer, IPSTR, IP2STR(&amp;(station.ip)));
+    sprintf(html, &#34;%s\nNode IP %s&#34; , html, ipBuffer);
+  }
+  server.send(200, &#34;text/plain&#34;, html);
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println();
+
+  Serial.print(&#34;Setting soft-AP configuration ... &#34;);
+  WiFi.mode(WIFI_AP_STA);
+  Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? &#34;Ready&#34; : &#34;Failed!&#34;);
+
+  Serial.print(&#34;Setting soft-AP ... &#34;);
+  Serial.println(WiFi.softAP(ssid,passphrase) ? &#34;Ready&#34; : &#34;Failed!&#34;);
+
+  Serial.print(&#34;Soft-AP IP address = &#34;);
+  Serial.println(WiFi.softAPIP());
+
+  server.on(&#34;/&#34;, handleRoot);
+  server.begin();
+  Serial.println(&#34;HTTP server started&#34;);
+}
+
+void loop() {
+  server.handleClient();
+  delay(2);
+}
+</code></pre><h2 id=esp32-art-net-node>ESP32 Art-Net Node</h2><p>The ESP32 Art-Net Node has some neo-pixels connected to pin 2. It connects the to ESP32 Access Point and receives DMX data in the form of individual R,G,B values for each
+connected neopixel which is then sends to the connected neopixels.</p><pre tabindex=0><code>// esp32ArtNetNode.io
+
+#include &lt;WiFi.h&gt;
+#include &lt;WiFiUdp.h&gt;
+#include &lt;ArtnetWifi.h&gt;
+#include &lt;FastLED.h&gt;
+
+//Wifi settings - be sure to replace these with the WiFi network that your computer is connected to
+
+const char* ssid = &#34;Art-Net&#34;;
+const char* password = &#34;esp32artnetAP&#34;;
+
+// LED Strip
+const int numLeds = 61; // Change if your setup has more or less LED&#39;s
+const int numberOfChannels = numLeds * 3; // Total number of DMX channels you want to receive (1 led = 3 channels)
+#define DATA_PIN 2 //The data pin that the WS2812 strips are connected to.
+CRGB leds[numLeds];
+
+// Artnet settings
+ArtnetWifi artnet;
+const int startUniverse = 0;
+
+bool sendFrame = 1;
+int previousDataLength = 0;
+
+// connect to wifi – returns true if successful or false if not
+boolean ConnectWifi(void)
+{
+  boolean state = true;
+  int i = 0;
+
+  WiFi.begin(ssid, password);
+  Serial.println(&#34;&#34;);
+  Serial.println(&#34;Connecting to WiFi&#34;);
+
+  // Wait for connection
+  Serial.print(&#34;Connecting&#34;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&#34;.&#34;);
+    if (i &gt; 20){
+      state = false;
+      break;
+    }
+    i++;
+  }
+  if (state){
+    Serial.println(&#34;&#34;);
+    Serial.print(&#34;Connected to &#34;);
+    Serial.println(ssid);
+    Serial.print(&#34;IP address: &#34;);
+    Serial.println(WiFi.localIP());
+  } else {
+    Serial.println(&#34;&#34;);
+    Serial.println(&#34;Connection failed.&#34;);
+  }
+
+  return state;
+}
+
+void onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t* data)
+{
+  sendFrame = 1;
+  // set brightness of the whole strip
+  if (universe == 15)
+  {
+    FastLED.setBrightness(data[0]);
+  }
+  // read universe and put into the right part of the display buffer
+  for (int i = 0; i &lt; length / 3; i++)
+  {
+    int led = i + (universe - startUniverse) * (previousDataLength / 3);
+    if (led &lt; numLeds)
+    {
+      leds[led] = CRGB(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+    }
+  }
+  previousDataLength = length;
+  FastLED.show();
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  ConnectWifi();
+  artnet.begin();
+  FastLED.addLeds&lt;WS2812, DATA_PIN, GRB&gt;(leds, numLeds);
+
+  // onDmxFrame will execute every time a packet is received by the ESP32
+  artnet.setArtDmxCallback(onDmxFrame);
+}
+
+void loop()
+{
+  // we call the read function inside the loop
+  artnet.read();
+}
+</code></pre><h2 id=esp32-art-net-server>ESP32 Art-Net Server</h2><p>The ESP32 Art-Net Server can be configured to send RGB Art-Net DMX data to one or more nodes of varying length neo-pixels. Pin 4 is set up as a rising interrupt pin, so an audio or vibration sensor (or any other sensor that will rise when activate) can be connected to pin 4, and this rising interrupt will trigger a change in colour of all the ESP32 Art-Net Node neopixels.</p><pre tabindex=0><code>// esp32ArtNetServer.ino
+
+/*
+This example will transmit a universe via Art-Net into the Network.
+This example may be copied under the terms of the MIT license, see the LICENSE file for details
+*/
+#include &lt;ArtnetWifi.h&gt;
+#include &lt;Arduino.h&gt;
+#include &lt;map&gt;
+
+//Wifi settings
+const char* ssid = &#34;Art-Net&#34;; // CHANGE FOR YOUR SETUP
+const char* password = &#34;esp32artnetAP&#34;; // CHANGE FOR YOUR SETUP
+
+// Artnet settings
+ArtnetWifi artnet0;
+ArtnetWifi artnet1;
+
+const int startUniverse = 0; // CHANGE FOR YOUR SETUP most software this is 1, some software send out artnet first universe as 0.
+const char host0[] = &#34;2.0.0.2&#34;; // CHANGE FOR YOUR SETUP your destination
+const char host1[] = &#34;2.0.0.3&#34;; // CHANGE FOR YOUR SETUP your destination
+
+struct RGB {
+    byte r;
+    byte g;
+    byte b;
+};
+
+RGB defaultColours[] = {
+  {255,0,0},
+  {0,255,0},
+  {0,0,255},
+  {255, 255, 0},
+  {0,255, 255}
+};
+
+RGB currentColour = {0,0,0};
+bool bChangeColour = true;
+int artnetRefreshIntervalMS = 40;
+int artnetLastRefreshTime = millis();
+int microphoneInterruptPin = 4;
+
+void IRAM_ATTR isr() {
+  bChangeColour = true;
+}
+
+// connect to wifi – returns true if successful or false if not
+boolean ConnectWifi(void)
+{
+  boolean state = true;
+  int i = 0;
+
+  WiFi.begin(ssid, password);
+  Serial.println(&#34;&#34;);
+  Serial.println(&#34;Connecting to WiFi&#34;);
+
+  // Wait for connection
+  Serial.print(&#34;Connecting&#34;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&#34;.&#34;);
+    if (i &gt; 20){
+      state = false;
+      break;
+    }
+    i++;
+  }
+  if (state){
+    Serial.println(&#34;&#34;);
+    Serial.print(&#34;Connected to &#34;);
+    Serial.println(ssid);
+    Serial.print(&#34;IP address: &#34;);
+    Serial.println(WiFi.localIP());
+  } else {
+    Serial.println(&#34;&#34;);
+    Serial.println(&#34;Connection failed.&#34;);
+  }
+
+  return state;
+}
+
+void changeColour() {
+  currentColour = defaultColours[random(sizeof(defaultColours))];
+
+  for (int i=0; i&lt;61; i++) {
+    artnet0.setByte(i*3+0, currentColour.r);
+    artnet0.setByte(i*3+1, currentColour.g);
+    artnet0.setByte(i*3+2, currentColour.b);
+  }
+  for (int i=0; i&lt;30; i++) {
+    artnet1.setByte(i*3+0, currentColour.r);
+    artnet1.setByte(i*3+1, currentColour.g);
+    artnet1.setByte(i*3+2, currentColour.b);
+  }
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  pinMode(microphoneInterruptPin, INPUT);
+  attachInterrupt(microphoneInterruptPin, isr, RISING);
+  ConnectWifi();
+  artnet0.begin(host0);
+  artnet0.setLength(3*61);
+  artnet0.setUniverse(startUniverse);
+  artnet1.begin(host1);
+  artnet1.setLength(3*30);
+  artnet1.setUniverse(startUniverse);
+}
+
+void loop() {
+  if (bChangeColour) {
+    Serial.println(&#34;Changing Colour&#34;);
+    changeColour();
+    bChangeColour = false;
+  }
+  if (millis() - artnetLastRefreshTime &gt;= artnetRefreshIntervalMS) {
+    artnet1.write();
+    artnet0.write();
+    artnetLastRefreshTime = millis();
+  }
+
+  delay(1);
+}
+</code></pre></content><p><a href=https://msmd.io/blog/esp32/>#esp32</a>
+<a href=https://msmd.io/blog/art-net/>#art-net</a>
 <a href=https://msmd.io/blog/neopixels/>#neopixels</a></p></main><footer>Made with <a href=https://github.com/janraasch/hugo-bearblog/>Hugo ʕ•ᴥ•ʔ Bear</a></footer></body></html>
