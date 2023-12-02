@@ -1,13 +1,13 @@
 # Base URL used when generating links to your pages
 # Set to the URL for your site
-baseURL = "https://msmd.io"
+baseURL = "https://msmd.dev"
 
 theme = 'hugo-bearblog'
 
 # Basic metadata configuration for your blog.
 title = "Monkey See Monkey Do"
 author = "Leigh Murray"
-copyright = "Copyright © 2022, msmd.io"
+copyright = "Copyright © 2023, msmd.dev"
 languageCode = "en-AU"
 
 # Generate a nice robots.txt for SEO
